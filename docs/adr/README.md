@@ -11,6 +11,7 @@ SD Meta Editor の設計判断の記録。採用した案だけでなく、**却
 | [0003](0003-batch-preset-only.md) | バッチ処理を v1 に導入する（プリセット適用限定） | Accepted | 2026-11-12 |
 | [0004](0004-stealth-png-removal.md) | stealth PNG の検出・除去を v1 必須機能とする | Accepted | 2026-11-12 |
 | [0005](0005-license-apache-2.0.md) | ライセンスに Apache License 2.0 を採用する | Accepted | 2026-11-12 |
+| [0006](0006-detail-sheet-for-long-lists.md) | 件数の多い一覧は詳細シート（別画面）で表示する | Accepted | 2026-11-12 |
 
 ## 運用ルール
 
