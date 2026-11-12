@@ -1,0 +1,33 @@
+name: サンプル画像の提供
+description: 未対応の生成ツールのサンプルを提供する
+labels: ["fixture"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ご提供ありがとうございます。**提供前に `tests/fixtures/README.md` のポリシーを必ずお読みください。**
+        フィクスチャ画像はメタデータを含んだままリポジトリにコミットされます。
+
+  - type: input
+    id: generator
+    attributes:
+      label: 生成ツールとバージョン
+    validations:
+      required: true
+
+  - type: textarea
+    id: metadata
+    attributes:
+      label: メタデータのダンプ
+      description: exiftool 等の出力。画像そのものより先にこちらを見せていただけると助かります
+      render: text
+
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 確認
+      options:
+        - label: この画像とメタデータが公開リポジトリに恒久的に含まれることに同意します
+          required: true
+        - label: 自分が権利を持つ画像であり、公開したくない情報を含みません
+          required: true

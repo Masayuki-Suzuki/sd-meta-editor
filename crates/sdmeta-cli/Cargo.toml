@@ -1,0 +1,16 @@
+[package]
+name = "sdmeta-cli"
+description = "Command-line interface for SD Meta Editor"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "sdmeta"
+path = "src/main.rs"
+
+[dependencies]
+sdmeta-core = { path = "../sdmeta-core" }

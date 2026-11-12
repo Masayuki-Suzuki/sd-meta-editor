@@ -1,0 +1,51 @@
+name: バグ報告
+description: 動作不良を報告する
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 何が起きたか
+      description: 期待した動作と実際の動作
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+    validations:
+      required: true
+
+  - type: input
+    id: generator
+    attributes:
+      label: 画像の生成元ツール
+      placeholder: "例: Forge Neo 2.31 / ComfyUI / NovelAI / 不明"
+
+  - type: dropdown
+    id: format
+    attributes:
+      label: 画像フォーマット
+      options: [PNG, JPEG, WebP, その他]
+
+  - type: input
+    id: os
+    attributes:
+      label: OS とバージョン
+      placeholder: "例: macOS 15.1 / Windows 11 / Ubuntu 24.04"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: ログ
+      description: ログファイルの該当箇所があれば貼ってください
+      render: text
+
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: 確認
+      options:
+        - label: 添付する画像・ログに、公開したくない情報が含まれていないことを確認しました
+          required: true

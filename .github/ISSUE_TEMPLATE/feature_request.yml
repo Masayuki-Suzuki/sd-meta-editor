@@ -1,0 +1,22 @@
+name: 機能要望
+description: 新しい機能や改善の提案
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 解決したい課題
+      description: 機能そのものではなく、困っていることを書いてください
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 提案する解決策
+
+  - type: textarea
+    id: adr
+    attributes:
+      label: 既存の設計判断との関係
+      description: docs/adr/ に関連する ADR があれば番号を書いてください

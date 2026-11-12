@@ -1,0 +1,11 @@
+[package]
+name = "sdmeta-core"
+description = "Lossless inspection, editing and removal of generative-AI metadata in JPEG, PNG and WebP images"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]

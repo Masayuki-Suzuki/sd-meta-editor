@@ -1,0 +1,29 @@
+[workspace]
+resolver = "3"
+members = ["crates/sdmeta-core", "crates/sdmeta-cli"]
+
+[workspace.package]
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.85"
+license = "Apache-2.0"
+repository = "https://github.com/OWNER/sd-meta-editor"
+authors = ["SD Meta Editor contributors"]
+
+[workspace.dependencies]
+# 依存はコーディング開始時に追加する。
+# 想定している候補:
+#   img-parts       JPEG/PNG/WebP コンテナのロスレス操作
+#   kamadak-exif    EXIF 読み取り
+#   little_exif     EXIF 書き込み
+#   png             PNG チャンク操作・再エンコード
+#   zune-jpeg       高速 JPEG デコード（プレビュー用）
+#   rayon           一括処理の並列化
+#   thiserror       エラー型
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
