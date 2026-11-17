@@ -7,7 +7,7 @@ version = "0.0.0"
 edition = "2024"
 rust-version = "1.85"
 license = "Apache-2.0"
-repository = "https://github.com/OWNER/sd-meta-editor"
+repository = "https://github.com/Masayuki-Suzuki/sd-meta-editor"
 authors = ["SD Meta Editor contributors"]
 
 [workspace.dependencies]
