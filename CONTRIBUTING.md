@@ -66,7 +66,7 @@ cargo test --workspace
 
 | ターゲット | 実行環境 |
 |---|---|
-| macOS (universal) | 開発機の Mac（主対象） |
+| macOS (Apple Silicon / arm64) | 開発機の Mac（主対象） |
 | Linux (x86_64) | Mac 上の Linux コンテナ |
 | Windows | Windows 実機（現在は保留） |
 

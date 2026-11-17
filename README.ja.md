@@ -47,6 +47,17 @@ app/                  Tauri 2 シェル（Rust バックエンド + React/TypeSc
 
 最も難しい部分（バイト列レベルのコンテナ操作）を GUI 非依存のクレートに置くことで、GUI なしでテストでき、CLI が副産物として得られます。
 
+## 動作環境
+
+| プラットフォーム | 状態 |
+|---|---|
+| macOS（**Apple Silicon** / arm64） | 主対象 |
+| Linux（x86_64） | 予定 |
+| Windows | 保留 |
+
+**Intel Mac は対象外です。** macOS 版のビルドターゲットは `aarch64-apple-darwin` 単体で、
+Intel Mac では起動しません。判断の理由は [ADR-0008](docs/adr/0008-apple-silicon-only.md) に記載しています。
+
 ## ドキュメント
 
 - [要件定義書](docs/requirements.md)

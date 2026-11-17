@@ -16,7 +16,7 @@ on:
 
 jobs:
   macos:
-    name: Build (macOS universal)
+    name: Build (macOS arm64)
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,12 +24,12 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: aarch64-apple-darwin,x86_64-apple-darwin
+          targets: aarch64-apple-darwin
 
       - uses: Swatinem/rust-cache@v2
 
       # TODO: app/ のスキャフォールド後に frontend のセットアップと
       #       tauri-apps/tauri-action によるビルドを追加する。
-      #       ターゲットは universal-apple-darwin（ADR-0001）。
+      #       ターゲットは aarch64-apple-darwin 単体（ADR-0008 C-7′）。
       - name: Placeholder
         run: echo "Tauri app has not been scaffolded yet (see docs/requirements.md section 8)."

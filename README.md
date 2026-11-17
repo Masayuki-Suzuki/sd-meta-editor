@@ -49,6 +49,17 @@ app/                  Tauri 2 shell (Rust backend + React/TypeScript frontend)
 
 The hard part — byte-level container surgery — lives in a GUI-independent crate so it can be tested without a GUI, and so the CLI comes for free.
 
+## Supported platforms
+
+| Platform | Status |
+|---|---|
+| macOS on **Apple Silicon** (arm64) | Primary target |
+| Linux (x86_64) | Planned |
+| Windows | On hold |
+
+**Intel Macs are not supported.** The macOS build targets `aarch64-apple-darwin` only and will not
+launch on an Intel machine — see [ADR-0008](docs/adr/0008-apple-silicon-only.md) for the reasoning.
+
 ## Documentation
 
 - [Requirements](docs/requirements.md)
@@ -57,7 +68,7 @@ The hard part — byte-level container surgery — lives in a GUI-independent cr
 
 ## Status and roadmap
 
-Design is complete through ADR-0004; implementation has not started. The planned order of work is listed at the end of the [requirements document](docs/requirements.md#8-実装の着手順推奨).
+Design is complete through ADR-0008; implementation has not started. The planned order of work is listed at the end of the [requirements document](docs/requirements.md#8-実装の着手順推奨).
 
 ## Contributing
 
