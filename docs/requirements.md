@@ -286,6 +286,8 @@ C2PA JUMBF（PNG `caBX` / JPEG `APP11`）は**削除対象に含めない**。FR
 
 ## 8. 実装の着手順（推奨）
 
+> フェーズと Issue 単位への細分化は [docs/roadmap.md](roadmap.md) にある。本節はその根拠。
+
 1. **読み取り専用のダンプ CLI**（`sdmeta-cli`）から着手する。GUI を一切作らずに `sdmeta-core` のパーサを検証でき、手元の画像を流すだけで実地調査（[docs/research/metadata-formats.md](research/metadata-formats.md)）が同時に完了する
 2. 生成されたコーパスを `tests/fixtures/` に回帰テストとして残す
 3. ロスレス書き出しパスを実装し、Verify で往復検証する

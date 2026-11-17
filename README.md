@@ -91,6 +91,7 @@ this scale ([ADR-0010](docs/adr/0010-no-code-signing.md)), so each OS will warn 
 - [Requirements](docs/requirements.md)
 - [Architecture Decision Records](docs/adr/README.md)
 - [Metadata format research](docs/research/metadata-formats.md)
+- [Implementation roadmap](docs/roadmap.md) — phases P0–P8 broken into issue-sized tasks
 - [AGENTS.md](AGENTS.md) — context and hard rules for AI coding agents
 - [3-OS verification checklist](docs/verification.md) — the only quality gate now that CI is gone; kept up to date as implementation proceeds
 

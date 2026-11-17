@@ -175,7 +175,8 @@ working record.
 | Where each tool stores metadata, and parsing pitfalls | [docs/research/metadata-formats.md](docs/research/metadata-formats.md) |
 | How to verify a change on three OSes | [docs/verification.md](docs/verification.md) |
 | Fixture policy | [tests/fixtures/README.md](tests/fixtures/README.md) |
-| Implementation order | [docs/requirements.md](docs/requirements.md) §8 |
+| Implementation order, phase by phase | [docs/roadmap.md](docs/roadmap.md) |
+| Why the order is what it is | [docs/requirements.md](docs/requirements.md) §8 |
 
 ## Build targets
 
@@ -191,10 +192,14 @@ GitHub Releases ([ADR-0010](docs/adr/0010-no-code-signing.md), [ADR-0012](docs/a
 
 ## If you are starting implementation
 
-Follow [docs/requirements.md](docs/requirements.md) §8. Begin with the read-only dump command in
-`sdmeta-cli`: it validates the parser without a GUI and drives the format research at the same time.
-Add `sdmeta selftest` early — it turns section A of [docs/verification.md](docs/verification.md) into
-one command, which is what keeps the three-OS gate practical.
+[docs/roadmap.md](docs/roadmap.md) breaks the work into phases P0–P8 and 58 issue-sized tasks, each
+with its own acceptance criteria and dependencies. **Work the phase you are in, in dependency order**
+— a phase does not start until the previous one meets its exit criteria.
+
+Seven tasks are marked 🧑 in the roadmap — P0-6, P2-3, P3-10 and all of P8. They need real hardware,
+a running generator, or a publishing action, so **you cannot complete them.** Each one has a
+ready-to-paste checklist in the roadmap's appendix. Say that they need a human rather than closing
+them, and never mark one done because the code side looks finished.
 
 The first test to write is the quote-aware tokenizer against
 `tests/fixtures/text/forge-neo-params.txt`.

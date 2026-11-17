@@ -18,6 +18,8 @@ Nothing has been released yet. The project is in its design phase; everything be
 - Apache-2.0 `LICENSE` and `NOTICE`, contribution guide, issue and pull request templates
 - `AGENTS.md`, so AI coding agents inherit the invariants and the fixture policy instead of
   rediscovering them from the ADRs
+- An implementation roadmap: phases P0–P8 broken into 58 issue-sized tasks with acceptance
+  criteria and dependencies, three of them flagged as impossible without all three machines
 
 ### Removed
 - GitHub Actions CI. Builds and checks run on local hardware instead — see

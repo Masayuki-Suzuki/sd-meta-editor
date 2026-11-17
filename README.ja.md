@@ -89,6 +89,7 @@ SHA-256 チェックサムを添付します。この規模で有料証明書を
 - [要件定義書](docs/requirements.md)
 - [アーキテクチャ決定記録（ADR）](docs/adr/README.md)
 - [メタデータ形式の調査メモ](docs/research/metadata-formats.md)
+- [実装ロードマップ](docs/roadmap.md) — フェーズ P0〜P8 と Issue 単位のタスク
 - [AGENTS.md](AGENTS.md) — AI コーディングエージェント向けの前提と禁止事項（英語）
 - [3 OS 検証チェックリスト](docs/verification.md) — CI が無い現在、唯一の品質ゲート。実装の進行に応じて随時更新
 
