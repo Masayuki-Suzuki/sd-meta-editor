@@ -21,6 +21,40 @@ authors = ["SD Meta Editor contributors"]
 #   rayon           一括処理の並列化
 #   thiserror       エラー型
 
+[workspace.lints.rust]
+unsafe_code = "forbid"       # このアプリに unsafe は不要。forbid なので #[allow] でも解除できない
+missing_docs = "warn"
+unreachable_pub = "warn"
+
+[workspace.lints.clippy]
+all = { level = "deny", priority = -1 }
+
+# panic 経路を塞ぐ。信頼できないファイルをパースするため、
+# 破損・切り詰められた入力でクラッシュしてはならない。
+unwrap_used = "deny"
+expect_used = "deny"
+indexing_slicing = "deny"
+panic = "deny"
+
+# 整数の黙示的な破壊を塞ぐ。チャンク長や EXIF オフセットはファイル由来の値であり、
+# `as` による切り捨ては黙って誤った長さを生む。
+cast_possible_truncation = "deny"
+cast_sign_loss = "deny"
+checked_conversions = "warn"
+as_conversions = "warn"
+
+# 無駄なコピーを塞ぐ。NFR-3（10MB を 50ms）はゼロコピー前提の予算である。
+redundant_clone = "deny"
+needless_pass_by_value = "warn"
+
+# 置き忘れを塞ぐ。
+todo = "deny"
+unimplemented = "deny"
+dbg_macro = "deny"
+print_stdout = "deny"
+print_stderr = "deny"
+missing_errors_doc = "warn"
+
 [profile.release]
 opt-level = 3
 lto = true

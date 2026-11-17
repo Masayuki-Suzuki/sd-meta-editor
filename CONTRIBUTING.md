@@ -34,13 +34,15 @@ These are premises of the project. Changing any of them requires a new ADR.
 |---|---|
 | Never modify the original file (unless explicitly opted in) | FR-6 |
 | The default save path never re-encodes pixel data | FR-6 |
-| ICC profiles and EXIF Orientation are always preserved | FR-9 |
+| ICC profiles, EXIF Orientation and C2PA are always preserved | FR-9, ADR-0011 |
 | Unknown keys and chunks must remain removable | FR-3 |
 | Re-read and verify the file after saving | FR-7 |
 | Never swallow an error | ADR-0001 C-6 |
 | Never put CPU work on the UI thread | ADR-0001 C-1 |
 | A keystroke must not cause IPC | ADR-0001 C-2 |
 | Lossless writing counts as verified only after testing on all three OSes, on real hardware | ADR-0009 C-13 |
+
+> Using an AI coding agent on this repository? Point it at [AGENTS.md](AGENTS.md) first.
 
 ## 4. How we use ADRs
 
@@ -53,7 +55,9 @@ Design decisions are recorded in [docs/adr/](docs/adr/).
 
 ## 5. Coding conventions (once implementation starts)
 
-- Rust: code must pass `cargo fmt` and `cargo clippy -- -D warnings`
+- Rust: code must pass `cargo fmt` and `cargo clippy`. Lint levels are set in the workspace
+  `Cargo.toml` under `[workspace.lints]` — do not pass `-D warnings`, it overrides the deliberate
+  distinction between `deny` (blocking) and `warn` (advisory)
 - TypeScript: formatter and linter will be fixed when implementation begins
 - Commit messages: [Conventional Commits](https://www.conventionalcommits.org/)
 
@@ -64,7 +68,7 @@ stop a broken change automatically, so please run these locally before opening a
 
 ```bash
 cargo fmt --all -- --check
-cargo clippy --workspace --all-targets -- -D warnings
+cargo clippy --workspace --all-targets
 cargo test --workspace
 ```
 

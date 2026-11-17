@@ -29,13 +29,15 @@
 |---|---|
 | 元ファイルは書き換えない（明示的オプトインを除く） | FR-6 |
 | 既定の保存は再エンコードしない | FR-6 |
-| ICC プロファイルと EXIF Orientation は常に保持する | FR-9 |
+| ICC プロファイル・EXIF Orientation・C2PA は常に保持する | FR-9, ADR-0011 |
 | 未知のキー・チャンクも削除可能にする | FR-3 |
 | 保存後に読み直して検証する | FR-7 |
 | エラーを握り潰さない | ADR-0001 C-6 |
 | CPU 処理を UI スレッドに置かない | ADR-0001 C-1 |
 | キー入力で IPC を発生させない | ADR-0001 C-2 |
 | ロスレス書き出しは 3 OS の実機で検証するまで完了と見なさない | ADR-0009 C-13 |
+
+> このリポジトリで AI コーディングエージェントを使う場合は、まず [AGENTS.md](AGENTS.md)（英語）を読ませてください。
 
 ## 4. ADR の運用
 
@@ -47,7 +49,9 @@
 
 ## 5. コーディング規約（実装開始後）
 
-- Rust: `cargo fmt` と `cargo clippy -- -D warnings` を通すこと
+- Rust: `cargo fmt` と `cargo clippy` を通すこと。lint のレベルはワークスペースの
+  `Cargo.toml` の `[workspace.lints]` で決めている。`-D warnings` は付けない
+  （`deny`＝即ブロックと `warn`＝助言、という意図的な区別を上書きしてしまう）
 - TypeScript: フォーマッタ・リンタは実装開始時に確定する
 - コミットメッセージ: [Conventional Commits](https://www.conventionalcommits.org/ja/)
 
@@ -58,7 +62,7 @@
 
 ```bash
 cargo fmt --all -- --check
-cargo clippy --workspace --all-targets -- -D warnings
+cargo clippy --workspace --all-targets
 cargo test --workspace
 ```
 

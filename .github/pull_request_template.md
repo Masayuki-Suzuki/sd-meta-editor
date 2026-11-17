@@ -14,7 +14,7 @@ This repository has **no CI** ([ADR-0007](https://github.com/Masayuki-Suzuki/sd-
 runs these for you. Tick what you ran:
 
 - [ ] `cargo fmt --all -- --check`
-- [ ] `cargo clippy --workspace --all-targets -- -D warnings`
+- [ ] `cargo clippy --workspace --all-targets`
 - [ ] `cargo test --workspace`
 - [ ] Not applicable (no Rust code touched)
 
@@ -37,7 +37,7 @@ Tick every box, or mark the whole section N/A for a docs-only change.
 
 - [ ] The original file is never modified (unless explicitly opted in) — FR-6
 - [ ] The default save path does not re-encode pixel data — FR-6
-- [ ] ICC profiles and EXIF Orientation are preserved — FR-9
+- [ ] ICC profiles, EXIF Orientation and C2PA are preserved — FR-9, ADR-0011
 - [ ] Unknown keys and chunks remain removable — FR-3
 - [ ] The file is re-read and verified after saving — FR-7
 - [ ] No error is swallowed — ADR-0001 C-6
