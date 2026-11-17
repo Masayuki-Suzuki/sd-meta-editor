@@ -33,6 +33,7 @@
 | エラーを握り潰さない | ADR-0001 C-6 |
 | CPU 処理を UI スレッドに置かない | ADR-0001 C-1 |
 | キー入力で IPC を発生させない | ADR-0001 C-2 |
+| ロスレス書き出しは Windows 実機で検証するまで完了と見なさない | ADR-0007 C-12 |
 
 ## 4. ADR の運用
 
@@ -47,6 +48,30 @@
 - Rust: `cargo fmt` と `cargo clippy -- -D warnings` を通すこと
 - TypeScript: フォーマッタ・リンタは実装開始時に確定する
 - コミットメッセージ: [Conventional Commits](https://www.conventionalcommits.org/ja/)
+
+### 提出前のローカルチェック
+
+**このリポジトリには CI がありません**（[ADR-0007](docs/adr/0007-ci-abolished-local-builds.md)）。
+自動で止めてくれる仕組みが無いため、以下を手元で通してから Pull Request を出してください。
+
+```bash
+cargo fmt --all -- --check
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
+```
+
+実行結果は Pull Request の「検証方法」欄に記載してください。
+
+### ビルド対象と実行環境
+
+| ターゲット | 実行環境 |
+|---|---|
+| macOS (universal) | 開発機の Mac（主対象） |
+| Linux (x86_64) | Mac 上の Linux コンテナ |
+| Windows | Windows 実機（現在は保留） |
+
+macOS から Linux / Windows のバンドルは生成できません。理由は
+[ADR-0007](docs/adr/0007-ci-abolished-local-builds.md) に記載しています。
 
 ## 6. 連絡先
 

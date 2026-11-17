@@ -1,48 +1,35 @@
 # リリースワークフローの雛形。
-# app/ の Tauri スキャフォールドが入るまでは手動実行のみ（自動では起動しない）。
+#
+# ADR-0007 により、当面このワークフローは使用しない。
+# macOS 向けビルドはローカル（開発機の Mac）で行う方針で、
+# GitHub Actions の macOS ランナーは分数倍率 10 倍のため常用しない。
+#
+# Windows / Linux のジョブは意図的に含めていない。
+# Windows は Windows 実機でのビルド、Linux は Linux コンテナでの
+# ビルドを想定している（いずれも ADR-0007 を参照）。
+#
+# app/ の Tauri スキャフォールドが入るまでは中身も未完成。
 name: Release
 
 on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build (${{ matrix.platform }})
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: macos-universal
-            runner: macos-latest
-            args: "--target universal-apple-darwin"
-          - platform: windows
-            runner: windows-latest
-            args: ""
-          - platform: linux
-            runner: ubuntu-22.04
-            args: ""
+  macos:
+    name: Build (macOS universal)
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install Linux dependencies
-        if: matrix.platform == 'linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libwebkit2gtk-4.1-dev \
-            libappindicator3-dev \
-            librsvg2-dev \
-            patchelf
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.platform == 'macos-universal' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
 
       - uses: Swatinem/rust-cache@v2
 
       # TODO: app/ のスキャフォールド後に frontend のセットアップと
       #       tauri-apps/tauri-action によるビルドを追加する。
+      #       ターゲットは universal-apple-darwin（ADR-0001）。
       - name: Placeholder
         run: echo "Tauri app has not been scaffolded yet (see docs/requirements.md section 8)."

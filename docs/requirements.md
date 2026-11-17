@@ -241,13 +241,17 @@ ICC プロファイルと EXIF Orientation は、「全削除」を含むすべ�
 | [0004](adr/0004-stealth-png-removal.md) | stealth PNG の検出・除去を v1 必須。ロスレス原則の唯一の例外 |
 | [0005](adr/0005-license-apache-2.0.md) | ライセンスに Apache-2.0 を採用。CLA は不要。LICENSE は逐語、著作権表示は NOTICE に分離 |
 | [0006](adr/0006-detail-sheet-for-long-lists.md) | 件数の多い一覧は詳細シートで別画面表示。LoRA・Raw・workflow で UI を共有。派生制約 C-10・C-11 |
+| [0007](adr/0007-ci-abolished-local-builds.md) | CI を廃止しローカルビルドへ。macOS を主対象、Windows は保留。派生制約 C-12 |
 
 ---
 
 ## 7. 未決事項
 
 - ~~ライセンス~~ → **Apache-2.0 で確定**（[ADR-0005](adr/0005-license-apache-2.0.md)）
-- コード署名の方針（Apple Developer Program 加入の有無、Windows 証明書）
+- ~~ビルド・CI 体制~~ → **CI は廃止、ローカルビルドで確定**（[ADR-0007](adr/0007-ci-abolished-local-builds.md)）
+- コード署名の方針（Apple Developer Program 加入の有無）。Windows 証明書は Windows 対応の保留に伴い先送り
+- Windows 対応の再開時期（[ADR-0007](adr/0007-ci-abolished-local-builds.md) で保留中）
+- Linux ビルドをコンテナで行う際のベースイメージとアーキテクチャ（x86_64 / aarch64）
 - C2PA を v1 でチャンク削除対象に含めるかの最終確認
 - ファイル名リネーム提案の UI 設計
 - 配布チャネル（GitHub Releases のみか、Homebrew / winget 等も対象とするか）
