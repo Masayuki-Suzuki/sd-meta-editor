@@ -1,58 +1,66 @@
 # Contributing to SD Meta Editor
 
-現在は**設計段階**です。アプリケーションコードはまだありません。
-この段階で最も価値のある貢献は、**設計への指摘**と**サンプル画像の提供**です。
+[日本語版はこちら](CONTRIBUTING.ja.md)
+
+The project is still in its **design phase** — no application code exists yet. At this stage the two
+most valuable contributions are **feedback on the design** and **sample images**.
 
 ---
 
-## 1. サンプル画像の提供（最も歓迎します）
+## 1. Sample images (most welcome)
 
-本ツールの品質は、**どれだけ多様な生成ツールの実物を知っているか**でほぼ決まります。
-未対応のツールで生成した画像をお持ちであれば、ぜひご提供ください。
+The quality of this tool depends almost entirely on **how many real-world generators we have actually
+seen output from**. If you have images produced by a tool we do not handle yet, please send them our way.
 
-提供前に [tests/fixtures/README.md](tests/fixtures/README.md) のポリシーを必ずお読みください。
-フィクスチャ画像は**メタデータを含んだまま**コミットされます（それが検証対象のため）。
-公開したくない情報を含む画像は提供しないでください。
+Read the policy in [tests/fixtures/README.md](tests/fixtures/README.md) before you do.
+Fixture images are committed **with their metadata intact** — that metadata is the thing under test.
+Do not submit an image containing anything you would not want published.
 
-## 2. 設計への指摘
+## 2. Feedback on the design
 
-- 削除し損ねる経路を見つけた場合は、**Security Issue として扱います**（単なるバグではありません）
-- 設計判断への異論は [docs/adr/](docs/adr/) の該当 ADR を参照のうえ Issue でお願いします
+- If you find a path through which metadata survives removal, we treat it as a **security issue**, not
+  an ordinary bug. Use the "Metadata leak" issue template.
+- To disagree with a design decision, read the relevant record under [docs/adr/](docs/adr/) first, then
+  open an issue referring to it.
 
-## 3. 設計上の不変条件
+> The ADRs are written in Japanese. An English translation may be added later; until then, the
+> rationale for every decision lives in those files and the issue tracker is fine in either language.
 
-以下はこのプロジェクトの前提です。変更には新しい ADR が必要です。
+## 3. Design invariants
 
-| 不変条件 | 根拠 |
+These are premises of the project. Changing any of them requires a new ADR.
+
+| Invariant | Source |
 |---|---|
-| 元ファイルは書き換えない（明示的オプトインを除く） | FR-6 |
-| 既定の保存は再エンコードしない | FR-6 |
-| ICC プロファイルと EXIF Orientation は常に保持する | FR-9 |
-| 未知のキー・チャンクも削除可能にする | FR-3 |
-| 保存後に読み直して検証する | FR-7 |
-| エラーを握り潰さない | ADR-0001 C-6 |
-| CPU 処理を UI スレッドに置かない | ADR-0001 C-1 |
-| キー入力で IPC を発生させない | ADR-0001 C-2 |
-| ロスレス書き出しは Windows 実機で検証するまで完了と見なさない | ADR-0007 C-12 |
+| Never modify the original file (unless explicitly opted in) | FR-6 |
+| The default save path never re-encodes pixel data | FR-6 |
+| ICC profiles and EXIF Orientation are always preserved | FR-9 |
+| Unknown keys and chunks must remain removable | FR-3 |
+| Re-read and verify the file after saving | FR-7 |
+| Never swallow an error | ADR-0001 C-6 |
+| Never put CPU work on the UI thread | ADR-0001 C-1 |
+| A keystroke must not cause IPC | ADR-0001 C-2 |
+| Lossless writing counts as verified only after testing on all three OSes, on real hardware | ADR-0009 C-13 |
 
-## 4. ADR の運用
+## 4. How we use ADRs
 
-設計判断は [docs/adr/](docs/adr/) に記録します。
+Design decisions are recorded in [docs/adr/](docs/adr/).
 
-- 1 ファイル 1 決定
-- **Accepted になった ADR は書き換えない。** 判断が変わったら新しい ADR を起こし、旧 ADR を `Superseded` にする
-- 新規作成は [template.md](docs/adr/template.md) をコピーする
+- One decision per file
+- **An ADR that has been Accepted is never rewritten.** When a decision changes, write a new ADR and
+  mark the old one `Superseded`
+- Start from [template.md](docs/adr/template.md)
 
-## 5. コーディング規約（実装開始後）
+## 5. Coding conventions (once implementation starts)
 
-- Rust: `cargo fmt` と `cargo clippy -- -D warnings` を通すこと
-- TypeScript: フォーマッタ・リンタは実装開始時に確定する
-- コミットメッセージ: [Conventional Commits](https://www.conventionalcommits.org/ja/)
+- Rust: code must pass `cargo fmt` and `cargo clippy -- -D warnings`
+- TypeScript: formatter and linter will be fixed when implementation begins
+- Commit messages: [Conventional Commits](https://www.conventionalcommits.org/)
 
-### 提出前のローカルチェック
+### Checks to run before submitting
 
-**このリポジトリには CI がありません**（[ADR-0007](docs/adr/0007-ci-abolished-local-builds.md)）。
-自動で止めてくれる仕組みが無いため、以下を手元で通してから Pull Request を出してください。
+**This repository has no CI** ([ADR-0007](docs/adr/0007-ci-abolished-local-builds.md)). Nothing will
+stop a broken change automatically, so please run these locally before opening a pull request.
 
 ```bash
 cargo fmt --all -- --check
@@ -60,43 +68,44 @@ cargo clippy --workspace --all-targets -- -D warnings
 cargo test --workspace
 ```
 
-実行結果は Pull Request の「検証方法」欄に記載してください。
+Record the results in the "verification" section of your pull request.
 
-### ビルド対象と実行環境
+### Build targets and where they are built
 
-| ターゲット | 実行環境 |
+| Target | Built on |
 |---|---|
-| macOS (Apple Silicon / arm64) | 開発機の Mac（主対象） |
-| Linux (x86_64) | Mac 上の Linux コンテナ |
-| Windows | Windows 実機（現在は保留） |
+| macOS (Apple Silicon / arm64) | the developer's Mac |
+| Windows 11 | real Windows hardware |
+| Ubuntu 24.04 LTS (x86_64) | real Ubuntu hardware |
 
-macOS から Linux / Windows のバンドルは生成できません。理由は
-[ADR-0007](docs/adr/0007-ci-abolished-local-builds.md) に記載しています。
+A Mac cannot produce Linux or Windows bundles, so each platform is built on its own machine.
+Supported OS versions, and what happens with older ones, are covered in
+[ADR-0009](docs/adr/0009-local-builds-all-three-os.md).
 
-## 6. 連絡先
+## 6. Contact
 
-バグ報告・機能要望は GitHub Issues へお願いします。
+Please use GitHub Issues for bug reports and feature requests.
 
-## 7. ライセンスと貢献の扱い
+## 7. Licensing of contributions
 
-本プロジェクトは [Apache License 2.0](LICENSE) で公開しています。
+This project is released under the [Apache License 2.0](LICENSE).
 
-Apache-2.0 の**第 5 条（Submission of Contributions）**により、あなたが意図的に本プロジェクトへ
-送った貢献は、別段の明示的な合意がない限り、**本ライセンスと同一条件でライセンスされます。**
-そのため本プロジェクトでは**別途の CLA（Contributor License Agreement）を求めません。**
+Under **§5 (Submission of Contributions)** of Apache-2.0, any contribution you intentionally submit
+for inclusion in this project is **licensed under the same terms as the project**, unless you state
+otherwise explicitly. For that reason this project does **not** ask for a separate CLA
+(Contributor License Agreement).
 
-送信した貢献についてその条件で提供する権利を有していることを、Pull Request の時点で
-表明したものとみなします。
+By opening a pull request you represent that you have the right to submit the work under those terms.
 
-### 新規ファイルのヘッダ
+### Header for new files
 
-新しいソースファイルには SPDX 識別子を 1 行入れてください。
+Add a single SPDX identifier line to every new source file.
 
 ```rust
 // SPDX-License-Identifier: Apache-2.0
 ```
 
-### NOTICE ファイル
+### The NOTICE file
 
-`NOTICE` は Apache-2.0 第 4 条 (d) に基づく帰属表示です。
-サードパーティ由来のコードを取り込んだ場合は、その帰属表示をここに追記してください。
+`NOTICE` carries the attribution notices required by Apache-2.0 §4(d). If you bring in third-party
+code, add its attribution there.

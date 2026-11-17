@@ -1,14 +1,26 @@
 # Changelog
 
-本プロジェクトの変更履歴。[Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) に準拠し、
-[Semantic Versioning](https://semver.org/lang/ja/) を採用する。
+All notable changes to this project are documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
+adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+Nothing has been released yet. The project is in its design phase; everything below is groundwork.
+
 ### Added
-- プロジェクト初期構成、要件定義書、ADR-0001 〜 ADR-0004
+- Cargo workspace skeleton (`sdmeta-core`, `sdmeta-cli`) with no implementation yet
+- Requirements document covering FR-1 to FR-12 and NFR-1 to NFR-8
+- Metadata format research notes, with a synthetic test fixture reproducing the parser pitfalls
+- Architecture Decision Records ADR-0001 through ADR-0009
+- Apache-2.0 `LICENSE` and `NOTICE`, contribution guide, issue and pull request templates
+
+### Removed
+- GitHub Actions CI. Builds and checks run on local hardware instead — see
+  [ADR-0007](docs/adr/0007-ci-abolished-local-builds.md)
 
 <!--
-リリース時はここに追記する。
+Add a section here on release.
 ## [0.1.0] - YYYY-MM-DD
 -->

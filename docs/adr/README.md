@@ -14,6 +14,7 @@ SD Meta Editor の設計判断の記録。採用した案だけでなく、**却
 | [0006](0006-detail-sheet-for-long-lists.md) | 件数の多い一覧は詳細シート（別画面）で表示する | Accepted | 2026-11-12 |
 | [0007](0007-ci-abolished-local-builds.md) | CI を廃止し、ビルドは開発機でのローカル実行に切り替える | Accepted | 2026-11-17 |
 | [0008](0008-apple-silicon-only.md) | macOS 版は Apple Silicon 限定とし、universal ビルドを行わない | Accepted | 2026-11-17 |
+| [0009](0009-local-builds-all-three-os.md) | 3 OS すべてを実機ローカルビルドで対象とし、対応 OS バージョンを確定する | Accepted | 2026-11-17 |
 
 ## 運用ルール
 

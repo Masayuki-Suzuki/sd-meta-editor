@@ -75,4 +75,4 @@ images/   実画像ファイル（コンテナ操作・stealth 検出の検証�
 ComfyUI / SwarmUI / InvokeAI / Fooocus / NovelAI（stealth 付き）/ Draw Things /
 C2PA 付き画像（DALL·E・Firefly 等）/ WebP lossless / EXIF 埋め込みサムネイル付き JPEG
 
-提供方法は [CONTRIBUTING.md](../../CONTRIBUTING.md) を参照してください。
+提供方法は [CONTRIBUTING.ja.md](../../CONTRIBUTING.ja.md) を参照してください。

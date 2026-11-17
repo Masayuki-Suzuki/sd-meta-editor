@@ -24,6 +24,7 @@ desktop.ini
 .vscode/*
 !.vscode/extensions.json
 *.swp
+.junie/
 
 # Logs
 *.log

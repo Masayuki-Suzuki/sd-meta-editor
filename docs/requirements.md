@@ -243,6 +243,7 @@ ICC プロファイルと EXIF Orientation は、「全削除」を含むすべ�
 | [0006](adr/0006-detail-sheet-for-long-lists.md) | 件数の多い一覧は詳細シートで別画面表示。LoRA・Raw・workflow で UI を共有。派生制約 C-10・C-11 |
 | [0007](adr/0007-ci-abolished-local-builds.md) | CI を廃止しローカルビルドへ。macOS を主対象、Windows は保留。派生制約 C-12 |
 | [0008](adr/0008-apple-silicon-only.md) | macOS 版は Apple Silicon 限定。universal ビルドを行わない。C-7 を C-7′ で置換 |
+| [0009](adr/0009-local-builds-all-three-os.md) | 3 OS すべて実機ローカルビルド。Windows 11 / Ubuntu 24.04 に確定。C-12 を C-13 で置換 |
 
 ---
 
@@ -250,9 +251,10 @@ ICC プロファイルと EXIF Orientation は、「全削除」を含むすべ�
 
 - ~~ライセンス~~ → **Apache-2.0 で確定**（[ADR-0005](adr/0005-license-apache-2.0.md)）
 - ~~ビルド・CI 体制~~ → **CI は廃止、ローカルビルドで確定**（[ADR-0007](adr/0007-ci-abolished-local-builds.md)）
-- コード署名の方針（Apple Developer Program 加入の有無）。Windows 証明書は Windows 対応の保留に伴い先送り
-- Windows 対応の再開時期（[ADR-0007](adr/0007-ci-abolished-local-builds.md) で保留中）
-- Linux ビルドをコンテナで行う際のベースイメージとアーキテクチャ（x86_64 / aarch64）。macOS 側は [ADR-0008](adr/0008-apple-silicon-only.md) で arm64 単体に確定
+- ~~Windows 対応の再開時期~~ / ~~Linux ビルドのコンテナ構成~~ → **3 OS すべて実機ローカルビルドで確定**（[ADR-0009](adr/0009-local-builds-all-three-os.md)）
+- コード署名の方針（Apple Developer Program 加入の有無、Windows 証明書）
+- macOS の最低対応バージョン（Apple Silicon 限定なので下限は自動的に上がるが、明示していない）
+- 3 OS 手動検証のチェックリスト設計（C-13 を満たすための手順）
 - C2PA を v1 でチャンク削除対象に含めるかの最終確認
 - ファイル名リネーム提案の UI 設計
 - 配布チャネル（GitHub Releases のみか、Homebrew / winget 等も対象とするか）

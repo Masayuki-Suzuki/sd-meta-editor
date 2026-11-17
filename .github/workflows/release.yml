@@ -1,14 +1,16 @@
-# リリースワークフローの雛形。
+# リリースワークフローの雛形。**現在このワークフローは使用しない。**
 #
-# ADR-0007 により、当面このワークフローは使用しない。
-# macOS 向けビルドはローカル（開発機の Mac）で行う方針で、
-# GitHub Actions の macOS ランナーは分数倍率 10 倍のため常用しない。
+# ADR-0009 により、3 OS すべてをそれぞれの実機でローカルビルドする方針に決まった。
 #
-# Windows / Linux のジョブは意図的に含めていない。
-# Windows は Windows 実機でのビルド、Linux は Linux コンテナでの
-# ビルドを想定している（いずれも ADR-0007 を参照）。
+#   macOS (Apple Silicon)  -> 開発機の Mac
+#   Windows 11             -> Windows 実機
+#   Ubuntu 24.04 (x86_64)  -> Ubuntu 実機
+#
+# GitHub Actions を使わない理由は ADR-0007（CI の廃止）を参照。
+# Windows / Linux のジョブを含めていないのは、実機ビルドに移したためである。
 #
 # app/ の Tauri スキャフォールドが入るまでは中身も未完成。
+# このワークフロー自体の削除は ADR-0009 の Consequences のとおり別途判断する。
 name: Release
 
 on:

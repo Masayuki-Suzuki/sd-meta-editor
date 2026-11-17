@@ -4,6 +4,8 @@
 
 生成 AI 画像（Stable Diffusion 系）に埋め込まれたメタデータを**確認・編集し、確実に削除する**ための、高速なクロスプラットフォームデスクトップアプリ。
 
+[English README](README.md)
+
 ---
 
 ## 何のためのツールか
@@ -49,11 +51,15 @@ app/                  Tauri 2 シェル（Rust バックエンド + React/TypeSc
 
 ## 動作環境
 
-| プラットフォーム | 状態 |
+| プラットフォーム | 対応バージョン |
 |---|---|
-| macOS（**Apple Silicon** / arm64） | 主対象 |
-| Linux（x86_64） | 予定 |
-| Windows | 保留 |
+| macOS（**Apple Silicon** / arm64） | Apple Silicon のみ |
+| Windows | **11 のみ** |
+| Linux（x86_64） | **Ubuntu 24.04 LTS** |
+
+いずれもそのプラットフォームの実機でビルドとテストを行っています
+（[ADR-0009](docs/adr/0009-local-builds-all-three-os.md)）。これより古い OS バージョンは対象外です。
+当該環境の実機を保有し、自身でビルドと**テストまで実行できる**コントリビューターが現れた場合に検討します。
 
 **Intel Mac は対象外です。** macOS 版のビルドターゲットは `aarch64-apple-darwin` 単体で、
 Intel Mac では起動しません。判断の理由は [ADR-0008](docs/adr/0008-apple-silicon-only.md) に記載しています。
@@ -63,6 +69,14 @@ Intel Mac では起動しません。判断の理由は [ADR-0008](docs/adr/0008
 - [要件定義書](docs/requirements.md)
 - [アーキテクチャ決定記録（ADR）](docs/adr/README.md)
 - [メタデータ形式の調査メモ](docs/research/metadata-formats.md)
+
+## ステータスとロードマップ
+
+設計は ADR-0009 まで完了し、実装は未着手です。着手順は[要件定義書の第 8 章](docs/requirements.md#8-実装の着手順推奨)にあります。
+
+## 貢献
+
+[CONTRIBUTING.ja.md](CONTRIBUTING.ja.md) をご覧ください。未対応の生成ツールで作られたサンプル画像の提供を特に歓迎します。提供前に [tests/fixtures/README.md](tests/fixtures/README.md) のフィクスチャポリシーをお読みください。
 
 ## ライセンス
 

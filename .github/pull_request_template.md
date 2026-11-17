@@ -1,23 +1,47 @@
-## 概要
+## Summary
 
-<!-- 何を、なぜ変更したか -->
+<!-- What changed, and why. -->
 
-## 関連 Issue / ADR
+## Related issues / ADRs
 
-<!-- 例: Closes #12 / ADR-0003 に基づく -->
+<!-- e.g. Closes #12 / implements ADR-0003 -->
 
-## 設計上の不変条件チェック
+## Verification
 
-CONTRIBUTING.md の「設計上の不変条件」に抵触しないことを確認してください。
-抵触する場合は**新しい ADR が必要**です。
+<!-- How you checked this. If you added a fixture, say so. -->
 
-- [ ] 元ファイルを書き換えていない
-- [ ] 既定の保存パスで再エンコードしていない
-- [ ] ICC プロファイルと EXIF Orientation を保持している
-- [ ] 未知のキー・チャンクも削除可能なままである
-- [ ] エラーを握り潰していない
-- [ ] CPU 処理を UI スレッドに置いていない
+This repository has **no CI** ([ADR-0007](https://github.com/Masayuki-Suzuki/sd-meta-editor/blob/main/docs/adr/0007-ci-abolished-local-builds.md)), so nothing
+runs these for you. Tick what you ran:
 
-## 検証方法
+- [ ] `cargo fmt --all -- --check`
+- [ ] `cargo clippy --workspace --all-targets -- -D warnings`
+- [ ] `cargo test --workspace`
+- [ ] Not applicable (no Rust code touched)
 
-<!-- どう確認したか。フィクスチャを追加した場合はその旨も -->
+### Hardware tested on
+
+Required for any change to the write path (invariant C-13). Each platform is built and tested on real
+hardware — see [ADR-0009](https://github.com/Masayuki-Suzuki/sd-meta-editor/blob/main/docs/adr/0009-local-builds-all-three-os.md).
+
+- [ ] macOS (Apple Silicon)
+- [ ] Windows 11
+- [ ] Ubuntu 24.04 LTS
+- [ ] Not applicable (write path untouched)
+
+## Design invariants
+
+Confirm this change does not break any invariant below. **If it does, it needs a new ADR** — see
+[CONTRIBUTING.md](https://github.com/Masayuki-Suzuki/sd-meta-editor/blob/main/CONTRIBUTING.md) ([日本語](https://github.com/Masayuki-Suzuki/sd-meta-editor/blob/main/CONTRIBUTING.ja.md)).
+
+Tick every box, or mark the whole section N/A for a docs-only change.
+
+- [ ] The original file is never modified (unless explicitly opted in) — FR-6
+- [ ] The default save path does not re-encode pixel data — FR-6
+- [ ] ICC profiles and EXIF Orientation are preserved — FR-9
+- [ ] Unknown keys and chunks remain removable — FR-3
+- [ ] The file is re-read and verified after saving — FR-7
+- [ ] No error is swallowed — ADR-0001 C-6
+- [ ] No CPU work runs on the UI thread — ADR-0001 C-1
+- [ ] No keystroke causes IPC — ADR-0001 C-2
+- [ ] Lossless writing is verified on all three OSes, on real hardware — ADR-0009 C-13
+- [ ] Not applicable (documentation only)

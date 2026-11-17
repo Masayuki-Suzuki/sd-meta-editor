@@ -51,11 +51,15 @@ The hard part — byte-level container surgery — lives in a GUI-independent cr
 
 ## Supported platforms
 
-| Platform | Status |
+| Platform | Supported version |
 |---|---|
-| macOS on **Apple Silicon** (arm64) | Primary target |
-| Linux (x86_64) | Planned |
-| Windows | On hold |
+| macOS on **Apple Silicon** (arm64) | Apple Silicon only |
+| Windows | **11 only** |
+| Linux (x86_64) | **Ubuntu 24.04 LTS** |
+
+Every build is produced and tested on real hardware for its own platform
+([ADR-0009](docs/adr/0009-local-builds-all-three-os.md)). Older OS versions are out of scope: we
+will consider them if a contributor owns the machine and can build **and test** on it themselves.
 
 **Intel Macs are not supported.** The macOS build targets `aarch64-apple-darwin` only and will not
 launch on an Intel machine — see [ADR-0008](docs/adr/0008-apple-silicon-only.md) for the reasoning.
