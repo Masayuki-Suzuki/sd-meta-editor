@@ -38,7 +38,7 @@
 
 - ComfyUI workflow JSON のノード単位編集
 - AVIF / HEIC 対応
-- C2PA マニフェストの構造的解釈（v1 ではチャンク単位の削除対象に含めるのみ）
+- C2PA マニフェストの構造的解釈（v1 では Raw 表示のみ。削除はしない → [ADR-0011](adr/0011-c2pa-not-removed.md)）
 - 自動更新、アダプタのプラグイン化
 
 ### 明確に対象外
@@ -149,9 +149,12 @@ raw            （原文バイト列を常に保持）
 
 単一処理・一括処理で共通。複数選択可。「全削除」のみ排他。
 
+**「全削除」は文字どおりの全削除ではない。** FR-9 の保護対象（ICC・EXIF Orientation・C2PA）は
+残る。UI 上でこれを明示し、利用者が「全部消えた」と誤解しないようにする。
+
 | # | プリセット | 対象 |
 |---|---|---|
-| 1 | メタデータ全削除 | 全チャンク・全 EXIF・stealth（ICC と Orientation は保持） |
+| 1 | メタデータ全削除 | 全チャンク・全 EXIF・stealth（ICC・Orientation・C2PA は保持。FR-9 参照） |
 | 2 | ポジティブプロンプト削除 | `prompt.positive` |
 | 3 | ネガティブプロンプト削除 | `prompt.negative`（`Negative prompt:` 行ごと） |
 | 4 | プロンプト全削除 | 2 + 3 |
@@ -192,13 +195,27 @@ raw            （原文バイト列を常に保持）
 - MakerNote
 - GPS
 - stealth PNG（アルファ LSB）
-- C2PA JUMBF（PNG `caBX` / JPEG `APP11`）
 
-また、**ファイル名そのものにプロンプト断片が含まれる場合**は警告を出し、リネームを任意で提案する（強制しない）。
+C2PA JUMBF（PNG `caBX` / JPEG `APP11`）は**削除対象に含めない**。FR-9 の保護対象とする（[ADR-0011](adr/0011-c2pa-not-removed.md)）。
+
+また、**ファイル名そのものにプロンプト断片が含まれる場合**は警告を出す。
+出力ファイル名は FR-6 のとおり `[元ファイル名]_edited.[元拡張子]` に固定で、
+**リネームの提案は行わない**（元ファイル名を変えたい場合は利用者が手で行う）。
 
 ### FR-9 保護対象
 
-ICC プロファイルと EXIF Orientation は、「全削除」を含むすべてのプリセットで既定保持する。これらを剥ぐと色が変わる／画像が回転する事故になる。
+以下は「全削除」を含むすべてのプリセットで既定保持する。
+
+| 保護対象 | 保持する理由 |
+|---|---|
+| ICC プロファイル | 剥ぐと色が変わる |
+| EXIF Orientation | 剥ぐと画像が回転する |
+| C2PA / Content Credentials | AI 生成物であることは開示すべき情報であり、隠す対象ではない（[ADR-0011](adr/0011-c2pa-not-removed.md)） |
+
+前 2 者は「剥ぐと事故になる」ため、C2PA は「剥ぐべきでない」ため保護する。理由は異なるが扱いは同じ。
+
+なお本アプリの編集は **C2PA の署名検証を失敗させる**（hard binding のハッシュが変わるため）。
+これは避けられないので、C2PA を検出したら編集前に警告を表示し、内容を Raw シートで表示する。
 
 ### FR-10 一括処理
 
@@ -244,6 +261,10 @@ ICC プロファイルと EXIF Orientation は、「全削除」を含むすべ�
 | [0007](adr/0007-ci-abolished-local-builds.md) | CI を廃止しローカルビルドへ。macOS を主対象、Windows は保留。派生制約 C-12 |
 | [0008](adr/0008-apple-silicon-only.md) | macOS 版は Apple Silicon 限定。universal ビルドを行わない。C-7 を C-7′ で置換 |
 | [0009](adr/0009-local-builds-all-three-os.md) | 3 OS すべて実機ローカルビルド。Windows 11 / Ubuntu 24.04 に確定。C-12 を C-13 で置換 |
+| [0010](adr/0010-no-code-signing.md) | コード署名は行わず回避手順を案内。SHA-256 チェックサムを添付 |
+| [0011](adr/0011-c2pa-not-removed.md) | C2PA は削除せず FR-9 の保護対象へ。署名検証は失敗する点を警告 |
+| [0012](adr/0012-github-only-distribution.md) | 配布は GitHub Releases のみ。Homebrew / winget は対象外 |
+| [0013](adr/0013-minimum-macos-version.md) | 最低対応 macOS は 14.6。技術的下限ではなく検証済みの下限 |
 
 ---
 
@@ -252,12 +273,14 @@ ICC プロファイルと EXIF Orientation は、「全削除」を含むすべ�
 - ~~ライセンス~~ → **Apache-2.0 で確定**（[ADR-0005](adr/0005-license-apache-2.0.md)）
 - ~~ビルド・CI 体制~~ → **CI は廃止、ローカルビルドで確定**（[ADR-0007](adr/0007-ci-abolished-local-builds.md)）
 - ~~Windows 対応の再開時期~~ / ~~Linux ビルドのコンテナ構成~~ → **3 OS すべて実機ローカルビルドで確定**（[ADR-0009](adr/0009-local-builds-all-three-os.md)）
-- コード署名の方針（Apple Developer Program 加入の有無、Windows 証明書）
-- macOS の最低対応バージョン（Apple Silicon 限定なので下限は自動的に上がるが、明示していない）
-- 3 OS 手動検証のチェックリスト設計（C-13 を満たすための手順）
-- C2PA を v1 でチャンク削除対象に含めるかの最終確認
-- ファイル名リネーム提案の UI 設計
-- 配布チャネル（GitHub Releases のみか、Homebrew / winget 等も対象とするか）
+- ~~コード署名の方針~~ → **v1 では署名せず、回避手順の案内と SHA-256 チェックサムで対応**（[ADR-0010](adr/0010-no-code-signing.md)）
+- ~~C2PA を削除対象に含めるか~~ → **含めない。FR-9 の保護対象とする**（[ADR-0011](adr/0011-c2pa-not-removed.md)）
+- ~~ファイル名リネーム提案の UI~~ → **提案は行わない。出力名は FR-6 の `_edited` サフィックス固定**
+- ~~配布チャネル~~ → **GitHub Releases のみ**（[ADR-0012](adr/0012-github-only-distribution.md)）
+- ~~macOS の最低対応バージョン~~ → **14.6 で確定**（[ADR-0013](adr/0013-minimum-macos-version.md)）
+- ~~3 OS 検証チェックリストの設計~~ → **[docs/verification.md](verification.md) に作成**。実装の進行に応じて随時更新する
+
+**設計段階の未決事項はすべて解消した。** 以降の論点は実装着手後に出てくるものに限る。
 
 ---
 

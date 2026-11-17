@@ -18,7 +18,8 @@ SD Meta Editor はその目的のために作られています。中核的な�
 
 | 目標 | 実現方法 |
 |---|---|
-| **消し残さない** | 見落としやすい経路を網羅：`zTXt`、`eXIf`、XMP、MakerNote、GPS、EXIF 埋め込みサムネイル、C2PA JUMBF、アルファ LSB ステガノグラフィ（stealth PNG） |
+| **消し残さない** | 見落としやすい経路を網羅：`zTXt`、`eXIf`、XMP、MakerNote、GPS、EXIF 埋め込みサムネイル、アルファ LSB ステガノグラフィ（stealth PNG） |
+| **開示は残す** | C2PA / Content Credentials は**削除しません**。どう作ったかを隠すことと、AI 生成物であること自体を隠すことは別です（[ADR-0011](docs/adr/0011-c2pa-not-removed.md)） |
 | **劣化させない** | メタデータは画素データの外側にある。保存時はコンテナのチャンクだけを書き換え、画像ビットストリームはバイト列のままコピーする。デコードも再エンコードもしない |
 | **速い** | ロスレス保存はほぼファイルコピーのコスト |
 | **固まらない** | すべての I/O とデコードを UI スレッドの外で実行。キー入力ごとの IPC 往復を行わない |
@@ -39,6 +40,12 @@ SD Meta Editor はその目的のために作られています。中核的な�
 
 **SynthID 等の画素内不可視透かしは本ツールでは除去できません。** メタデータを消しても画像が追跡不能になるわけではありません。曖昧にせず明記します。
 
+**編集すると C2PA の署名検証は失敗します。** C2PA マニフェストは対象アセットのバイト範囲をハッシュして署名するため、
+他のメタデータを書き換えるとその結びつきが壊れます。マニフェスト自体は削除せず保持しますが、
+検証ツールからは「署名後に改変された画像」と報告されます。Content Credentials を含むファイルは、編集前に警告を表示します。
+
+**配布物にコード署名はありません。** macOS の Gatekeeper と Windows の SmartScreen が警告を出します。[インストール](#インストール)を参照してください。
+
 ## アーキテクチャ
 
 ```
@@ -53,7 +60,7 @@ app/                  Tauri 2 シェル（Rust バックエンド + React/TypeSc
 
 | プラットフォーム | 対応バージョン |
 |---|---|
-| macOS（**Apple Silicon** / arm64） | Apple Silicon のみ |
+| macOS（**Apple Silicon** / arm64） | **14.6 以降**（[ADR-0013](docs/adr/0013-minimum-macos-version.md)） |
 | Windows | **11 のみ** |
 | Linux（x86_64） | **Ubuntu 24.04 LTS** |
 
@@ -64,11 +71,25 @@ app/                  Tauri 2 シェル（Rust バックエンド + React/TypeSc
 **Intel Mac は対象外です。** macOS 版のビルドターゲットは `aarch64-apple-darwin` 単体で、
 Intel Mac では起動しません。判断の理由は [ADR-0008](docs/adr/0008-apple-silicon-only.md) に記載しています。
 
+## インストール
+
+まだリリースはありません。公開時は **GitHub Releases のみ**で配布します
+（[ADR-0012](docs/adr/0012-github-only-distribution.md)）。Homebrew や winget には登録せず、
+SHA-256 チェックサムを添付します。この規模で有料証明書を取得する判断は取らないため
+（[ADR-0010](docs/adr/0010-no-code-signing.md)）**コード署名はありません**。初回起動時に各 OS が警告を出します。
+
+| OS | 表示される内容 | 対処 |
+|---|---|---|
+| macOS | 「開発元を確認できないため開けません」 | システム設定 → プライバシーとセキュリティ → **このまま開く**。macOS 15 以降では Control クリックからの「開く」は使えません。 |
+| Windows 11 | 「WindowsによってPCが保護されました」 | **詳細情報** → **実行** |
+| Ubuntu | AppImage が起動しない | `chmod +x SD_Meta_Editor-*.AppImage` |
+
 ## ドキュメント
 
 - [要件定義書](docs/requirements.md)
 - [アーキテクチャ決定記録（ADR）](docs/adr/README.md)
 - [メタデータ形式の調査メモ](docs/research/metadata-formats.md)
+- [3 OS 検証チェックリスト](docs/verification.md) — CI が無い現在、唯一の品質ゲート。実装の進行に応じて随時更新
 
 ## ステータスとロードマップ
 

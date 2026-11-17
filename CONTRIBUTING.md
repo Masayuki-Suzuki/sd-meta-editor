@@ -74,13 +74,17 @@ Record the results in the "verification" section of your pull request.
 
 | Target | Built on |
 |---|---|
-| macOS (Apple Silicon / arm64) | the developer's Mac |
+| macOS 14.6+ (Apple Silicon / arm64) | the developer's Mac |
 | Windows 11 | real Windows hardware |
 | Ubuntu 24.04 LTS (x86_64) | real Ubuntu hardware |
 
 A Mac cannot produce Linux or Windows bundles, so each platform is built on its own machine.
 Supported OS versions, and what happens with older ones, are covered in
-[ADR-0009](docs/adr/0009-local-builds-all-three-os.md).
+[ADR-0009](docs/adr/0009-local-builds-all-three-os.md) and
+[ADR-0013](docs/adr/0013-minimum-macos-version.md).
+
+If your change touches the write path, invariant C-13 applies: it must be verified on all three
+machines. The checklist is [docs/verification.md](docs/verification.md).
 
 ## 6. Contact
 

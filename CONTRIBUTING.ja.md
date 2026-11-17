@@ -68,13 +68,17 @@ cargo test --workspace
 
 | ターゲット | 実行環境 |
 |---|---|
-| macOS (Apple Silicon / arm64) | 開発機の Mac |
+| macOS 14.6 以降 (Apple Silicon / arm64) | 開発機の Mac |
 | Windows 11 | Windows 実機 |
 | Ubuntu 24.04 LTS (x86_64) | Ubuntu 実機 |
 
 macOS から Linux / Windows のバンドルは生成できないため、それぞれの実機でビルドします。
 対応 OS バージョンと、それより古いバージョンの扱いは
-[ADR-0009](docs/adr/0009-local-builds-all-three-os.md) に記載しています。
+[ADR-0009](docs/adr/0009-local-builds-all-three-os.md) と
+[ADR-0013](docs/adr/0013-minimum-macos-version.md) に記載しています。
+
+書き出しパスに触る変更には不変条件 C-13 が適用され、3 実機すべてでの検証が必要です。
+チェックリストは [docs/verification.md](docs/verification.md) です。
 
 ## 6. 連絡先
 

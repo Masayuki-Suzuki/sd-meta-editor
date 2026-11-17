@@ -97,7 +97,7 @@ LoRA ハッシュも桁数が揃わず、`0x` 接頭辞が付くものが混在�
 | XMP（`APP1` / `XMP ` チャンク） | 一部ツールが二重記録する |
 | MakerNote / GPS | カメラ由来。img2img の元画像由来で混入しうる |
 | **stealth PNG（アルファ LSB）** | チャンク削除では一切消えない（ADR-0004） |
-| **C2PA / Content Credentials** | JUMBF として埋まる（PNG `caBX` / JPEG `APP11`）。通常の EXIF・tEXt 走査では見つからない |
+| **C2PA / Content Credentials** | JUMBF として埋まる（PNG `caBX` / JPEG `APP11`）。通常の EXIF・tEXt 走査では見つからない。**削除対象外**（[ADR-0011](../adr/0011-c2pa-not-removed.md)）だが、検出と内容表示のために位置の把握は必要 |
 | **ファイル名そのもの** | ComfyUI の filename prefix 等にプロンプト断片が入る。`_edited` サフィックス方式では元のファイル名が温存されるため盲点になる |
 
 ### LoRA 名とモデル名の暴露度について

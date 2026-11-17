@@ -15,6 +15,10 @@ SD Meta Editor の設計判断の記録。採用した案だけでなく、**却
 | [0007](0007-ci-abolished-local-builds.md) | CI を廃止し、ビルドは開発機でのローカル実行に切り替える | Accepted | 2026-11-17 |
 | [0008](0008-apple-silicon-only.md) | macOS 版は Apple Silicon 限定とし、universal ビルドを行わない | Accepted | 2026-11-17 |
 | [0009](0009-local-builds-all-three-os.md) | 3 OS すべてを実機ローカルビルドで対象とし、対応 OS バージョンを確定する | Accepted | 2026-11-17 |
+| [0010](0010-no-code-signing.md) | コード署名を行わず、OS の警告の回避手順を案内する | Accepted | 2026-11-17 |
+| [0011](0011-c2pa-not-removed.md) | C2PA / Content Credentials は削除対象に含めない | Accepted | 2026-11-17 |
+| [0012](0012-github-only-distribution.md) | 配布チャネルを GitHub Releases のみとする | Accepted | 2026-11-17 |
+| [0013](0013-minimum-macos-version.md) | 最低対応 macOS バージョンを 14.6 とする | Accepted | 2026-11-17 |
 
 ## 運用ルール
 

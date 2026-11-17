@@ -18,7 +18,8 @@ SD Meta Editor is built around that goal. Its core promise is not "you can edit 
 
 | Goal | How |
 |---|---|
-| **Nothing is left behind** | Covers the easy-to-miss vectors: `zTXt`, `eXIf`, XMP, MakerNote, GPS, embedded EXIF thumbnails, C2PA JUMBF, and alpha-channel LSB steganography (stealth PNG) |
+| **Nothing is left behind** | Covers the easy-to-miss vectors: `zTXt`, `eXIf`, XMP, MakerNote, GPS, embedded EXIF thumbnails, and alpha-channel LSB steganography (stealth PNG) |
+| **Disclosure is kept** | C2PA / Content Credentials are **never stripped**. Hiding how an image was made is not the same as hiding *that* it is AI-generated ([ADR-0011](docs/adr/0011-c2pa-not-removed.md)) |
 | **No quality loss** | Metadata lives outside the pixel data. Saving rewrites only the container chunks and copies the image bitstream verbatim — no decode, no re-encode |
 | **Fast** | A lossless save is roughly the cost of a file copy |
 | **Never freezes** | All I/O and decoding runs off the UI thread. No IPC round-trip per keystroke |
@@ -35,9 +36,17 @@ SD Meta Editor is built around that goal. Its core promise is not "you can edit 
 - Original format preserved on export, with an `_edited` filename suffix
 - Optional re-encode mode with configurable quality
 
-## Known limitation
+## Known limitations
 
 **Invisible in-pixel watermarks such as SynthID cannot be removed by this tool.** Stripping metadata does not make an image untraceable. We would rather say this plainly than let the tool imply otherwise.
+
+**Editing invalidates a C2PA signature.** A C2PA manifest hashes the byte ranges of the asset it
+signs, so rewriting any other metadata breaks that binding. We keep the manifest rather than delete
+it, but a verifier will report the image as modified after signing. The app warns you before editing
+a file that carries Content Credentials.
+
+**Releases are not code-signed.** macOS Gatekeeper and Windows SmartScreen will warn you. See
+[Installation](#installation).
 
 ## Architecture
 
@@ -53,7 +62,7 @@ The hard part — byte-level container surgery — lives in a GUI-independent cr
 
 | Platform | Supported version |
 |---|---|
-| macOS on **Apple Silicon** (arm64) | Apple Silicon only |
+| macOS on **Apple Silicon** (arm64) | **14.6 or later** ([ADR-0013](docs/adr/0013-minimum-macos-version.md)) |
 | Windows | **11 only** |
 | Linux (x86_64) | **Ubuntu 24.04 LTS** |
 
@@ -64,11 +73,25 @@ will consider them if a contributor owns the machine and can build **and test** 
 **Intel Macs are not supported.** The macOS build targets `aarch64-apple-darwin` only and will not
 launch on an Intel machine — see [ADR-0008](docs/adr/0008-apple-silicon-only.md) for the reasoning.
 
+## Installation
+
+There are no releases yet. When there are, they will be published **only on GitHub Releases**
+([ADR-0012](docs/adr/0012-github-only-distribution.md)) — no Homebrew, no winget — with SHA-256
+checksums attached. Builds are **not code-signed**, because a paid certificate is not justified at
+this scale ([ADR-0010](docs/adr/0010-no-code-signing.md)), so each OS will warn you once:
+
+| OS | What you will see | How to proceed |
+|---|---|---|
+| macOS | "cannot be opened because the developer cannot be verified" | System Settings → Privacy & Security → **Open Anyway**. Control-clicking the app no longer works on macOS 15 and later. |
+| Windows 11 | "Windows protected your PC" | **More info** → **Run anyway** |
+| Ubuntu | AppImage will not start | `chmod +x SD_Meta_Editor-*.AppImage` |
+
 ## Documentation
 
 - [Requirements](docs/requirements.md)
 - [Architecture Decision Records](docs/adr/README.md)
 - [Metadata format research](docs/research/metadata-formats.md)
+- [3-OS verification checklist](docs/verification.md) — the only quality gate now that CI is gone; kept up to date as implementation proceeds
 
 ## Status and roadmap
 

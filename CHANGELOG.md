@@ -13,7 +13,8 @@ Nothing has been released yet. The project is in its design phase; everything be
 - Cargo workspace skeleton (`sdmeta-core`, `sdmeta-cli`) with no implementation yet
 - Requirements document covering FR-1 to FR-12 and NFR-1 to NFR-8
 - Metadata format research notes, with a synthetic test fixture reproducing the parser pitfalls
-- Architecture Decision Records ADR-0001 through ADR-0009
+- Architecture Decision Records ADR-0001 through ADR-0013
+- A 3-OS verification checklist, the only quality gate now that CI is gone
 - Apache-2.0 `LICENSE` and `NOTICE`, contribution guide, issue and pull request templates
 
 ### Removed
