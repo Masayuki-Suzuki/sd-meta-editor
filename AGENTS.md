@@ -143,6 +143,12 @@ reason in the PR body or an ADR.
 legitimate uses right after a length check — that is fine, as long as the comment says so. Never put
 a blanket `#![allow]` at crate or module level to silence a class of findings.
 
+**Test code is the one standing exception.** `expect_used` and `unwrap_used` are denied workspace
+wide, but in a test a panic *is* the correct failure mode and `expect("…")` reports why. An
+integration test file may therefore start with `#![allow(clippy::expect_used)]` and a comment saying
+that. Prefer avoiding them in unit tests inside `src/`, where `assert!` and `matches!` usually read
+better anyway.
+
 ## Things that are easy to get wrong here
 
 **Splitting the A1111 parameter line on `,` is the bug that breaks every competing tool.**
