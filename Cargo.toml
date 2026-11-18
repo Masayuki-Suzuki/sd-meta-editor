@@ -11,15 +11,15 @@ repository = "https://github.com/Masayuki-Suzuki/sd-meta-editor"
 authors = ["SD Meta Editor contributors"]
 
 [workspace.dependencies]
-# 依存はコーディング開始時に追加する。
-# 想定している候補:
+thiserror = "2.0.21"
+
+# 残りの依存はそれぞれの Issue で追加する。想定している候補:
 #   img-parts       JPEG/PNG/WebP コンテナのロスレス操作
 #   kamadak-exif    EXIF 読み取り
 #   little_exif     EXIF 書き込み
 #   png             PNG チャンク操作・再エンコード
 #   zune-jpeg       高速 JPEG デコード（プレビュー用）
 #   rayon           一括処理の並列化
-#   thiserror       エラー型
 
 [workspace.lints.rust]
 unsafe_code = "forbid"       # このアプリに unsafe は不要。forbid なので #[allow] でも解除できない
