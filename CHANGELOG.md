@@ -20,6 +20,8 @@ Nothing has been released yet. The project is in its design phase; everything be
   rediscovering them from the ADRs
 - An implementation roadmap: phases P0–P8 broken into 58 issue-sized tasks with acceptance
   criteria and dependencies, three of them flagged as impossible without all three machines
+- A documented development flow: one issue, one branch, one pull request, squash merge, and no
+  direct pushes to `main`
 
 ### Removed
 - GitHub Actions CI. Builds and checks run on local hardware instead — see

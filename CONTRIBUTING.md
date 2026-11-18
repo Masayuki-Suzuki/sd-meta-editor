@@ -90,11 +90,50 @@ Supported OS versions, and what happens with older ones, are covered in
 If your change touches the write path, invariant C-13 applies: it must be verified on all three
 machines. The checklist is [docs/verification.md](docs/verification.md).
 
-## 6. Contact
+## 6. Development flow
+
+One issue, one branch, one pull request. **Nothing is pushed directly to `main`.**
+
+### Branch names
+
+```
+<type>/<issue number>-<short slug>
+
+docs/59-pr-workflow
+feat/10-quote-aware-tokenizer
+fix/21-png-idat-copy
+```
+
+`<type>` is the same set as the Conventional Commits prefix, so there is nothing extra to remember.
+The issue number makes the target obvious from the branch name alone.
+
+### Pull requests
+
+- Reference the issue with `Closes #<n>` so it closes on merge
+- Fill in the "Verification" section — **this repository has no CI**
+  ([ADR-0007](docs/adr/0007-ci-abolished-local-builds.md)), so the checks you ran there are the only
+  evidence that anything works
+- **Squash merge.** One issue becomes one commit on `main`, which keeps the history one-to-one with
+  the issue list. Write the squashed message as a Conventional Commit whose body explains *why*
+- Delete the branch after merging
+
+### Issues labelled `needs-hardware`
+
+These require macOS, Windows 11 **and** Ubuntu 24.04 on real machines (invariant C-13). They carry a
+checklist instead of code, so they are closed by working through that checklist and recording the
+results in the issue — **no branch, no pull request.** See
+[docs/roadmap.md](docs/roadmap.md) for which issues these are.
+
+### Where the work comes from
+
+[docs/roadmap.md](docs/roadmap.md) holds phases P0–P8. Work the phase you are in, in dependency
+order; a phase does not start until the previous one meets its exit criteria.
+
+## 7. Contact
 
 Please use GitHub Issues for bug reports and feature requests.
 
-## 7. Licensing of contributions
+## 8. Licensing of contributions
 
 This project is released under the [Apache License 2.0](LICENSE).
 

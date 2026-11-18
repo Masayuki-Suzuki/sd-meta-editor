@@ -84,11 +84,50 @@ macOS から Linux / Windows のバンドルは生成できないため、それ
 書き出しパスに触る変更には不変条件 C-13 が適用され、3 実機すべてでの検証が必要です。
 チェックリストは [docs/verification.md](docs/verification.md) です。
 
-## 6. 連絡先
+## 6. 開発フロー
+
+1 Issue = 1 ブランチ = 1 PR。**`main` への直接 push はしない。**
+
+### ブランチ名
+
+```
+<type>/<issue番号>-<短いスラグ>
+
+docs/59-pr-workflow
+feat/10-quote-aware-tokenizer
+fix/21-png-idat-copy
+```
+
+`<type>` は Conventional Commits の接頭辞と同じ語彙なので、覚えることは増えません。
+Issue 番号を含めることで、ブランチ名だけで対象が分かります。
+
+### Pull Request
+
+- `Closes #<n>` で Issue を参照する（マージ時に自動クローズされる）
+- 「検証方法」欄を埋める。**このリポジトリには CI が無い**ため
+  （[ADR-0007](docs/adr/0007-ci-abolished-local-builds.md)）、そこに書いた実行結果が
+  動作することの唯一の証拠になる
+- **squash マージ**。1 Issue が `main` の 1 コミットになり、履歴と Issue 一覧が 1 対 1 で対応する。
+  squash 後のメッセージは Conventional Commits で書き、本文に**なぜ**を残す
+- マージ後にブランチを削除する
+
+### `needs-hardware` ラベルの Issue
+
+macOS・Windows 11・Ubuntu 24.04 の実機が必要な Issue（不変条件 C-13）です。
+コードではなくチェックリストを持つため、チェックリストを消化して結果を Issue に記録することで
+閉じます。**ブランチも PR も作りません。** 該当 Issue は
+[docs/roadmap.md](docs/roadmap.md) を参照してください。
+
+### 作業の出どころ
+
+[docs/roadmap.md](docs/roadmap.md) にフェーズ P0〜P8 があります。
+現在のフェーズを依存順に進めます。前のフェーズが完了条件を満たすまで次に進みません。
+
+## 7. 連絡先
 
 バグ報告・機能要望は GitHub Issues へお願いします。
 
-## 7. ライセンスと貢献の扱い
+## 8. ライセンスと貢献の扱い
 
 本プロジェクトは [Apache License 2.0](LICENSE) で公開しています。
 
