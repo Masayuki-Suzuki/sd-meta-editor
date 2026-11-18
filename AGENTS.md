@@ -48,10 +48,23 @@ If only a *derived constraint* of an older ADR changes, do **not** mark that who
 that would misrepresent history. ADR-0008, ADR-0009 and ADR-0013 all follow this pattern and explain
 the deviation in their own text. Follow it.
 
-### 3. Do not commit or push unless asked
+### 3. One issue, one branch, one pull request — and never push to `main`
 
-Make the edits, then stop and report what changed. The repository owner decides when and at what
-granularity work enters history. One approval covers one commit.
+Work comes from [docs/roadmap.md](docs/roadmap.md), registered as GitHub issues. For each one:
+
+```
+git switch -c <type>/<issue number>-<short slug>   # e.g. feat/10-quote-aware-tokenizer
+```
+
+Open a pull request with `Closes #<n>` and fill in its Verification section. Merges are **squash**,
+so one issue becomes one commit on `main`. Full rules: [CONTRIBUTING.md](CONTRIBUTING.md) §6.
+
+**Still ask before committing or pushing.** Make the edits, then stop and report what changed. The
+repository owner decides when work enters history, and one approval covers one commit — being on a
+branch does not change that.
+
+Issues labelled `needs-hardware` get **no branch and no pull request**; they are closed by working
+through their checklist on real machines, which you cannot do (see rule 4).
 
 ### 4. There is no CI — you are the gate
 
@@ -175,6 +188,7 @@ working record.
 | Where each tool stores metadata, and parsing pitfalls | [docs/research/metadata-formats.md](docs/research/metadata-formats.md) |
 | How to verify a change on three OSes | [docs/verification.md](docs/verification.md) |
 | Fixture policy | [tests/fixtures/README.md](tests/fixtures/README.md) |
+| Branch, PR and merge rules | [CONTRIBUTING.md](CONTRIBUTING.md) §6 |
 | Implementation order, phase by phase | [docs/roadmap.md](docs/roadmap.md) |
 | Why the order is what it is | [docs/requirements.md](docs/requirements.md) §8 |
 
