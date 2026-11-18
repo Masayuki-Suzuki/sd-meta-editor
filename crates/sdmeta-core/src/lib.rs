@@ -15,6 +15,7 @@
 //! | モジュール | 責務 | 状態 |
 //! |---|---|---|
 //! | [`error`]   | クレート共通のエラー型（ADR-0001 C-6） | **実装済み** |
+//! | [`logging`] | ログ基盤と、トーストに出すメッセージの生成（FR-12、C-6） | **実装済み** |
 //! | `container` | JPEG / PNG / WebP のチャンク・セグメント走査とロスレス書き出し | 未着手 |
 //! | `adapter`   | ツール別のキー → 正規フィールドへの写像（A1111 系、ComfyUI、NovelAI ほか） | 未着手 |
 //! | `model`     | 正規フィールドモデル（要件定義書 FR-3） | 未着手 |
@@ -32,5 +33,7 @@
 //! - 信頼できない入力でパニックしない。すべて [`Error`] として返す
 
 pub mod error;
+pub mod logging;
 
 pub use error::{Container, Error, Protected, Result};
+pub use logging::UserMessage;

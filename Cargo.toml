@@ -12,6 +12,9 @@ authors = ["SD Meta Editor contributors"]
 
 [workspace.dependencies]
 thiserror = "2.0.21"
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+tracing-appender = "0.2.5"
 
 # 残りの依存はそれぞれの Issue で追加する。想定している候補:
 #   img-parts       JPEG/PNG/WebP コンテナのロスレス操作
